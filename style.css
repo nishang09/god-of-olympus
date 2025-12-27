@@ -1,0 +1,85 @@
+/* GLOBAL VARIABLES - The "Vibe" */
+:root {
+    --primary: #007BFF; /* Odoo/Tech Blue */
+    --success: #28a745; /* Completed */
+    --warning: #ffc107; /* In Progress */
+    --danger: #dc3545;  /* Overdue/Scrap */
+    --bg-gray: #f4f6f9; /* Background */
+    --text-dark: #343a40;
+}
+
+/* THE KANBAN BOARD CONTAINER */
+.kanban-board {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: var(--bg-gray);
+    height: 100vh;
+    overflow-x: auto;
+}
+
+/* KANBAN COLUMNS */
+.kanban-column {
+    flex: 0 0 300px;
+    background: #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.column-header {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 15px;
+    padding-left: 5px;
+    border-bottom: 2px solid #ced4da;
+}
+
+/* THE CARD DESIGN (The "Wow" Factor) */
+.kanban-card {
+    background: white;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-left: 4px solid transparent; /* Logic for priority colors */
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: grab;
+}
+
+.kanban-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* LOGIC: Overdue Styling  */
+.kanban-card.is-overdue {
+    border-left-color: var(--danger) !important;
+    background-color: #fff5f5;
+}
+
+/* CARD DETAILS */
+.card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.card-meta {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.technician-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}

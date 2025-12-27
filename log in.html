@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearGuard - Floral Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- FLORAL THEME VARIABLES --- */
+        :root {
+            --primary-pink: #e91e63;
+            --soft-pink: #fce4ec;
+            --leaf-green: #4caf50;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.85); /* Milky Glass */
+            --shadow: 0 10px 30px rgba(233, 30, 99, 0.2);
+            --font-head: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%); /* Soft Gradient */
+            font-family: var(--font-body);
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            position: relative;
+        }
+
+        /* --- BACKGROUND IMAGE (Soft Flowers) --- */
+        .bg-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* Beautiful Floral Background */
+            background: url('https://images.unsplash.com/photo-1490750967868-58cb7506deed?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            opacity: 0.6; z-index: -2;
+        }
+
+        /* --- FALLING PETALS ANIMATION --- */
+        .petal {
+            position: absolute; top: -10%;
+            width: 15px; height: 15px;
+            background: #ffc1e3;
+            border-radius: 15px 0 15px 0; /* Petal Shape */
+            opacity: 0.8; z-index: -1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- 3D FLIP CARD --- */
+        .card-container {
+            position: relative; width: 400px; min-height: 550px;
+            perspective: 1000px;
+        }
+
+        .glass-box {
+            position: absolute; width: 100%; height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 2px solid #fff; border-radius: 25px;
+            padding: 40px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backface-visibility: hidden;
+        }
+
+        /* Flip Logic */
+        .card-container.flip .box-login { transform: rotateY(180deg); }
+        .card-container.flip .box-register { transform: rotateY(0deg); }
+        .box-login { transform: rotateY(0deg); z-index: 2; }
+        .box-register { transform: rotateY(-180deg); z-index: 1; }
+
+        /* Typography & Inputs */
+        h2 {
+            color: var(--primary-pink); font-family: var(--font-head);
+            font-size: 2.5rem; margin-bottom: 10px; font-weight: 800;
+        }
+        p { color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .input-group { position: relative; width: 100%; margin-bottom: 20px; }
+        
+        .input-group input {
+            width: 100%; padding: 15px 15px 15px 45px;
+            background: #fff; border: 1px solid #ffcdd2;
+            border-radius: 50px; /* Pill Shape */
+            color: #333; font-family: var(--font-body); font-size: 1rem;
+            outline: none; transition: 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 10px rgba(233, 30, 99, 0.2);
+        }
+
+        .input-group i {
+            position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+            color: var(--primary-pink);
+        }
+
+        /* Beautiful Button */
+        .btn-flower {
+            width: 100%; padding: 15px;
+            background: linear-gradient(45deg, #e91e63, #ff6090);
+            border: none; border-radius: 50px;
+            color: white; font-weight: 600; font-size: 1.1rem; letter-spacing: 1px;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        }
+        .btn-flower:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(233, 30, 99, 0.6); }
+
+        .switch-text { margin-top: 25px; color: #555; }
+        .switch-text span {
+            color: var(--primary-pink); cursor: pointer; font-weight: bold; text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer"></div>
+    <div id="petals-container"></div> 
+
+    <div class="card-container" id="mainCard">
+        
+        <div class="glass-box box-login">
+            <i class="fa fa-spa fa-3x" style="color:var(--primary-pink); margin-bottom:15px;"></i>
+            <h2>Welcome</h2>
+            <p>Sign in to your dashboard</p>
+
+            <form onsubmit="event.preventDefault(); window.location.href='index.html'">
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                
+                <button class="btn-flower">Login</button>
+            </form>
+
+            <p class="switch-text">
+                Don't have an account? <span onclick="flipCard()">Register</span>
+            </p>
+        </div>
+
+        <div class="glass-box box-register">
+            <i class="fa fa-leaf fa-3x" style="color:var(--leaf-green); margin-bottom:15px;"></i>
+            <h2 style="color:var(--leaf-green)">Join Us</h2>
+            <p>Start your journey today</p>
+
+            <form onsubmit="event.preventDefault(); window.location.href='index.html'">
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-key"></i>
+                    <input type="password" placeholder="Create Password" required>
+                </div>
+
+                <button class="btn-flower" style="background: linear-gradient(45deg, #4caf50, #81c784); box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);">
+                    Register
+                </button>
+            </form>
+
+            <p class="switch-text">
+                Already a member? <span onclick="flipCard()" style="color:var(--leaf-green)">Login</span>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. FLIP LOGIC
+        function flipCard() { document.getElementById('mainCard').classList.toggle('flip'); }
+
+        // 2. PETAL RAIN ANIMATION
+        function createPetals() {
+            const container = document.getElementById('petals-container');
+            const count = 25; // પાંખડીઓની સંખ્યા
+
+            for(let i=0; i<count; i++){
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                // Random position & speed
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5-10s
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Random Color Variance (Pink to White)
+                if(Math.random() > 0.5) petal.style.background = '#ffebee';
+                
+                container.appendChild(petal);
+            }
+        }
+        createPetals();
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<view type="kanban" model="maintenance_requests">
+    
+    <field name="stage" options="{'group_by': true}"/>
+    
+    <templates>
+        <t t-name="kanban-card">
+            
+            <div class="kanban-card" 
+                 t-att-class="record.scheduled_date &lt; current_date ? 'is-overdue' : ''">
+                
+                <div class="card-header">
+                    <strong class="card-title">
+                        <field name="subject"/> 
+                    </strong>
+                    <span class="badge" t-att-type="record.request_type">
+                        <field name="request_type"/>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <p class="text-muted">
+                        <i class="fa fa-cogs"></i> <field name="equipment_id"/> </p>
+                    <p class="text-small">
+                        <i class="fa fa-calendar"></i> 
+                        <field name="scheduled_date"/>
+                    </p>
+                </div>
+
+                <div class="card-footer card-meta">
+                    <div class="priority-widget">
+                        <field name="priority" widget="priority"/>
+                    </div>
+                    
+                    <div class="technician-box">
+                        <img t-att-src="record.technician_image_url" 
+                             class="technician-avatar" 
+                             title="Assigned Technician"/>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </templates>
+</view>

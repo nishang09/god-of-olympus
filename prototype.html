@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GearGuard — Premium Maintenance Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#C9A24D',
+            carbon: '#0B0F14'
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0,0,0,0.15)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: radial-gradient(circle at top, #121826, #05070C); }
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); }
+    .kanban-column { min-height: 420px; }
+    .overdue { border-left: 4px solid #ef4444; }
+  </style>
+</head>
+<body class="text-slate-200 font-sans">
+
+<!-- NAVBAR -->
+<nav class="glass border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold tracking-wide text-gold">⚙ GearGuard</h1>
+    <div class="space-x-6 text-sm font-medium">
+      <button onclick="showSection('kanban')" class="hover:text-gold">Dashboard</button>
+      <button onclick="showSection('equipment')" class="hover:text-gold">Assets</button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-8 py-10">
+
+<!-- KANBAN -->
+<section id="kanban-section">
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-semibold">Maintenance Command Board</h2>
+    <span class="px-4 py-1 rounded-full bg-white/10 text-xs tracking-widest">PREMIUM LIVE</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+    <!-- COLUMN -->
+    <div class="kanban-column glass rounded-2xl p-5 shadow-soft">
+      <h3 class="text-xs uppercase tracking-widest text-slate-400 mb-4">New</h3>
+      <div id="new-tasks"></div>
+    </div>
+
+    <div class="kanban-column glass rounded-2xl p-5 shadow-soft">
+      <h3 class="text-xs uppercase tracking-widest text-slate-400 mb-4">In Progress</h3>
+      <div id="progress-tasks"></div>
+    </div>
+
+    <div class="kanban-column glass rounded-2xl p-5 shadow-soft">
+      <h3 class="text-xs uppercase tracking-widest text-emerald-400 mb-4">Repaired</h3>
+      <div id="repaired-tasks"></div>
+    </div>
+
+    <div class="kanban-column glass rounded-2xl p-5 shadow-soft border border-red-500/30">
+      <h3 class="text-xs uppercase tracking-widest text-red-400 mb-4">Scrapped</h3>
+      <div id="scrap-tasks"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section id="equipment-section" class="hidden">
+  <div class="max-w-4xl mx-auto glass rounded-3xl shadow-soft p-10">
+    <div class="flex justify-between items-start">
+      <div>
+        <h2 id="eq-name" class="text-4xl font-bold">CNC Machine 01</h2>
+        <p id="eq-serial" class="text-slate-400">SN‑9981002</p>
+      </div>
+      <div class="border border-gold/40 rounded-xl px-6 py-4 text-center">
+        <p class="text-2xl font-bold text-gold" id="smart-count">1</p>
+        <p class="text-[11px] uppercase tracking-widest">Active Requests</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 mt-10">
+      <div>
+        <p class="text-xs uppercase text-slate-400">Operational Status</p>
+        <p id="eq-status" class="text-emerald-400 font-semibold mt-1">● Operational</p>
+      </div>
+      <div>
+        <p class="text-xs uppercase text-slate-400">Assigned Team</p>
+        <p id="eq-team" class="font-semibold mt-1">Mechanics</p>
+      </div>
+    </div>
+
+    <div class="mt-8 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-sm italic">
+      Moving any request to <span class="text-red-400">Scrapped</span> permanently decommissions this asset.
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+let state = {
+  equipment: { id: 101, name: "CNC Machine 01", serial: "SN‑9981002", team: "Mechanics", isUsable: true },
+  requests: [
+    { id: 1, subject: "Oil Leakage Detected", stage: "new", overdue: true, tech: "Mike" },
+    { id: 2, subject: "Precision Calibration", stage: "progress", overdue: false, tech: "Sarah" }
+  ]
+};
+
+function updateRequestStage(id, stage) {
+  const req = state.requests.find(r => r.id === id);
+  if (!req) return;
+  req.stage = stage;
+  if (stage === 'scrap') {
+    state.equipment.isUsable = false;
+    alert('SYSTEM NOTICE: Asset permanently scrapped.');
+  }
+  render();
+}
+
+function render() {
+  ['new','progress','repaired','scrap'].forEach(c => document.getElementById(c+'-tasks').innerHTML='');
+
+  document.getElementById('eq-status').textContent = state.equipment.isUsable ? '● Operational' : '✖ Decommissioned';
+  document.getElementById('eq-status').className = state.equipment.isUsable ? 'text-emerald-400 font-semibold mt-1' : 'text-red-400 font-semibold mt-1';
+  document.getElementById('smart-count').textContent = state.requests.filter(r => r.stage !== 'repaired').length;
+
+  state.requests.forEach(req => {
+    const card = document.createElement('div');
+    card.className = `mb-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition shadow ${req.overdue?'overdue':''}`;
+    card.innerHTML = `
+      <div class="flex justify-between items-center">
+        <span class="text-[10px] uppercase tracking-widest ${req.overdue?'text-red-400':'text-slate-400'}">${req.overdue?'Overdue':'Scheduled'}</span>
+        <select onchange="updateRequestStage(${req.id},this.value)" class="bg-black/30 border border-white/10 rounded text-xs">
+          <option value="new" ${req.stage==='new'?'selected':''}>New</option>
+          <option value="progress" ${req.stage==='progress'?'selected':''}>In Progress</option>
+          <option value="repaired" ${req.stage==='repaired'?'selected':''}>Repaired</option>
+          <option value="scrap" ${req.stage==='scrap'?'selected':''}>Scrap</option>
+        </select>
+      </div>
+      <h4 class="font-semibold mt-2">${req.subject}</h4>
+      <p class="text-xs text-slate-400 mt-2">Assigned to ${req.tech}</p>`;
+    document.getElementById(req.stage+'-tasks').appendChild(card);
+  });
+}
+
+function showSection(s) {
+  document.getElementById('kanban-section').classList.toggle('hidden', s!=='kanban');
+  document.getElementById('equipment-section').classList.toggle('hidden', s!=='equipment');
+}
+
+render();
+</script>
+</body>
+</html>
