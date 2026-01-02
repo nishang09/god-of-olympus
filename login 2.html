@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Crop Advisory | Farmer Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    background: radial-gradient(circle at top, #111, #000);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:
+        radial-gradient(circle, rgba(255,165,0,0.15) 2px, transparent 2px),
+        radial-gradient(circle, rgba(255,165,0,0.1) 1px, transparent 1px);
+    background-size:60px 60px, 120px 120px;
+    animation: moveBg 20s linear infinite;
+}
+
+@keyframes moveBg{
+    from{transform:translate(0,0);}
+    to{transform:translate(-200px,-200px);}
+}
+
+.login-box{
+    position:relative;
+    background:#0d0d0d;
+    width:360px;
+    padding:35px;
+    border-radius:14px;
+    box-shadow:0 0 30px rgba(255,140,0,0.5);
+    text-align:center;
+    z-index:1;
+}
+
+.logo{
+    font-size:22px;
+    color:orange;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+.logo span{color:white;}
+
+.login-box h2{
+    color:#ff9f1c;
+    margin-bottom:20px;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    background:#1a1a1a;
+    border:1px solid orange;
+    border-radius:6px;
+    color:white;
+}
+
+.login-box input::placeholder{color:#aaa;}
+
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(90deg, orange, #ff4500, orange);
+    background-size:200%;
+    animation: glow 3s linear infinite;
+}
+
+@keyframes glow{
+    0%{background-position:0%;}
+    100%{background-position:200%;}
+}
+
+.btn:hover{box-shadow:0 0 15px orange;}
+
+.otp-btn{
+    background:none;
+    border:1px solid orange;
+    color:orange;
+}
+
+.otp-btn:hover{
+    background:orange;
+    color:black;
+}
+
+.links{
+    margin-top:15px;
+    font-size:14px;
+    color:#ccc;
+}
+.links a{
+    color:orange;
+    text-decoration:none;
+}
+.links a:hover{text-decoration:underline;}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <div class="logo">🌾 Smart <span>Crop Advisory</span></div>
+    <h2>Farmer Login</h2>
+
+<form onsubmit="loginUser(event)">
+
+        <input type="text" placeholder="Mobile Number" required>
+
+        <!-- Password Login -->
+        <div id="passwordBox">
+            <input type="password" placeholder="Password">
+        </div>
+
+        <!-- OTP Login -->
+        <div id="otpBox" class="hidden">
+            <input type="text" placeholder="Enter OTP">
+        </div>
+
+        <button class="btn">Login</button>
+        <button type="button" class="btn otp-btn" onclick="toggleOTP()">
+            Login with OTP
+        </button>
+    </form>
+
+    <div class="links">
+        New Farmer? <a href="register.html">Register Here</a>
+    </div>
+</div>
+
+<script>
+function toggleOTP(){
+    document.getElementById("passwordBox").classList.toggle("hidden");
+    document.getElementById("otpBox").classList.toggle("hidden");
+}
+
+function loginUser(event){
+    event.preventDefault(); // page reload rokta hai
+    window.location.href = "dashboard.html";
+}
+</script>
+
+
+</body>
+</html>
