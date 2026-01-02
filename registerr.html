@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Profile Setup | AgriSmart Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #000; font-family: 'Inter', sans-serif; }
+        .dark-bg { background: radial-gradient(circle at 50% 50%, #1a1000 0%, #000 100%); min-height: 100vh; }
+        .glass-card { background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(249, 115, 22, 0.2); }
+        input, select { background: #0a0a0a !important; border: 1px solid #333 !important; color: white !important; }
+        .step-header { border-left: 4px solid #f97316; padding-left: 15px; margin-bottom: 20px; }
+    </style>
+</head>
+<body class="dark-bg flex items-center justify-center p-4 py-12">
+    <div class="glass-card p-8 md:p-12 rounded-[3rem] w-full max-w-2xl shadow-2xl">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-white uppercase tracking-tighter">Setup Your <span class="text-orange-500">Farmer Profile</span></h1>
+        </div>
+
+        <form id="regForm" class="space-y-8">
+            <div>
+                <div class="step-header"><h3 class="text-orange-500 font-bold uppercase text-sm">Step 1: Personal Details</h3></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="regName" placeholder="Full Name" class="w-full p-4 rounded-2xl" required>
+                    <input type="tel" id="regMobile" placeholder="Mobile Number" class="w-full p-4 rounded-2xl" required>
+                </div>
+            </div>
+            <div>
+                <div class="step-header"><h3 class="text-orange-500 font-bold uppercase text-sm">Step 2: Land & Soil Info</h3></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="number" id="regLand" placeholder="Acres" class="w-full p-4 rounded-2xl" required>
+                    <select id="regSoil" class="w-full p-4 rounded-2xl" required>
+                        <option value="">Soil Type</option>
+                        <option>Black Soil</option>
+                        <option>Red Soil</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div class="step-header"><h3 class="text-orange-500 font-bold uppercase text-sm">Step 3: Security</h3></div>
+                <input type="password" id="regPass" placeholder="Create Secure PIN" class="w-full p-4 rounded-2xl" required>
+            </div>
+            <button type="submit" class="w-full bg-orange-600 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:bg-orange-500 transition-all">
+                CREATE SMART PROFILE
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Storing data
+            localStorage.setItem('savedMobile', document.getElementById('regMobile').value);
+            localStorage.setItem('savedPass', document.getElementById('regPass').value);
+            localStorage.setItem('savedName', document.getElementById('regName').value);
+            alert("Registration Successful!");
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+</html>
