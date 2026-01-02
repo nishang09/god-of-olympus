@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSmart Pro | Global Portal</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* Previous Styles Kept Same... */
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Segoe UI', Arial, sans-serif; scroll-behavior: smooth;}
+body { background-color: #000; color: #fff; overflow-x: hidden; }
+
+.bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%); z-index: -1; }
+.stars { position: absolute; width: 200%; height: 200%; background: url('https://www.transparenttextures.com/patterns/stardust.png'); animation: moveStars 100s linear infinite; opacity: 0.3; }
+@keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+/* Navbar */
+.navbar{ display:flex; justify-content:space-between; align-items:center; padding:15px 50px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position:sticky; top:0; z-index:1000; border-bottom: 1px solid rgba(255,106,0,0.2); }
+.navbar .logo{ font-size:24px; font-weight:bold; color:#ff6a00; cursor: pointer; text-shadow: 0 0 10px rgba(255,106,0,0.5); }
+.navbar ul{ display:flex; list-style:none; gap:25px; }
+.navbar ul li a{ text-decoration:none; color:#eee; font-weight:600; transition:0.3s; }
+
+/* Flex Container for Buttons */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Updated Get Started Button */
+.get-started-btn {
+  padding: 18px 35px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.4s;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.4);
+}
+.get-started-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 106, 0, 0.7); }
+
+/* Stylish Language Selector */
+.lang-selector-container {
+    position: relative;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #ff6a00;
+    border-radius: 50px;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.lang-selector-container:hover { background: rgba(255, 106, 0, 0.1); box-shadow: 0 0 15px rgba(255, 106, 0, 0.3); }
+
+#langSelect {
+    background: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+    appearance: none; /* Removes default arrow */
+}
+
+/* Sections Styling */
+section { padding: 100px 50px; text-align: center; }
+.hero{ height:95vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80') no-repeat center/cover; }
+.hero h1{ font-size:64px; margin-bottom:10px; }
+.hero p{ font-size:24px; margin-bottom:40px; color: #ccc; }
+
+.features-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; margin-top: 40px; }
+.card{ background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(255,106,0,0.1); border-radius:24px; padding:40px 30px; transition:0.4s; }
+.card h3 { color: #ff6a00; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="bg-animation"><div class="stars"></div></div>
+
+<div class="navbar">
+  <div class="logo" id="navLogo">🌾 AgriSmart Pro</div>
+  <ul id="navMenu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#features">Services</a></li>
+    <li><a href="#weather">Weather</a></li>
+  </ul>
+  <div class="nav-right">
+    <button onclick="alert('Login System')">Login</button>
+  </div>
+</div>
+
+<section id="home" class="hero">
+  <h1 id="mainTitle" class="animate__animated animate__fadeInDown">Smart Agriculture</h1>
+  <p id="subTitle" class="animate__animated animate__fadeInUp">Modern Solutions for Marginal Farmers</p>
+  
+  <div class="hero-btns animate__animated animate__zoomIn">
+    <button class="get-started-btn" onclick="location.href='#features'">
+        <span id="btnText">GET STARTED</span> <i class="fas fa-arrow-right ml-2"></i>
+    </button>
+
+    <div class="lang-selector-container">
+        <i class="fas fa-globe text-orange-500"></i>
+        <select id="langSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="ar">العربية (Arabic)</option>
+            <option value="tr">Türkçe (Turkish)</option>
+        </select>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+    <h2 id="featTitle" style="font-size: 35px; color: #ff6a00;">Global Technology</h2>
+    <div class="features-grid">
+        <div class="card"><h3>🌱 Crop Advice</h3><p>Analysis for your soil.</p></div>
+        <div class="card"><h3>🌦 Weather</h3><p>Local farm forecasts.</p></div>
+    </div>
+</section>
+
+<script>
+// Language Content Data
+const translations = {
+    en: {
+        title: "Smart Agriculture",
+        sub: "Modern Solutions for Marginal Farmers",
+        btn: "GET STARTED",
+        feat: "Global Technology"
+    },
+    hi: {
+        title: "स्मार्ट कृषि",
+        sub: "सीमांत किसानों के लिए आधुनिक समाधान",
+        btn: "शुरू करें",
+        feat: "वैश्विक तकनीक"
+    },
+    es: {
+        title: "Agricultura Inteligente",
+        sub: "Soluciones modernas para pequeños agricultores",
+        btn: "EMPEZAR",
+        feat: "Tecnología Global"
+    },
+    ar: {
+        title: "الزراعة الذكية",
+        sub: "حلول حديثة لصغار المزارعين",
+        btn: "البدء الآن",
+        feat: "التكنولوجيا العالمية"
+    },
+    tr: {
+        title: "Akıllı Tarım",
+        sub: "Küçük Çiftçiler İçin Modern Çözümler",
+        btn: "BAŞLA",
+        feat: "Küresel Teknoloji"
+    }
+};
+
+function changeLanguage(lang) {
+    const content = translations[lang];
+    
+    // Update main elements
+    document.getElementById('mainTitle').innerText = content.title;
+    document.getElementById('subTitle').innerText = content.sub;
+    document.getElementById('btnText').innerText = content.btn;
+    document.getElementById('featTitle').innerText = content.feat;
+
+    // Optional: Direction for Arabic
+    if(lang === 'ar') {
+        document.body.style.direction = 'rtl';
+    } else {
+        document.body.style.direction = 'ltr';
+    }
+}
+</script>
+
+</body>
+</html>
