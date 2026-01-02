@@ -54,6 +54,17 @@ def generate_dynamic_advice(state, n, p, k, weather_desc, humidity):
 st.sidebar.header("🚜 Farmer Dashboard")
 state_choice = st.sidebar.selectbox("Home State", ["Gujarat", "Maharashtra", "Punjab", "Tamil Nadu", "Uttar Pradesh", "Karnataka"])
 city_input = st.sidebar.text_input("Enter Nearby City/Village", state_choice)
+# Add this inside the 'with st.sidebar:' block
+st.sidebar.subheader("📡 Connection Status")
+test_url = f"http://api.openweathermap.org/data/2.5/weather?q=London&appid={WEATHER_API_KEY}"
+response = requests.get(test_url)
+
+if response.status_code == 200:
+    st.sidebar.success("API Connected: Live Mode")
+elif response.status_code == 401:
+    st.sidebar.warning("API Key Inactive (Wait 2 hours)")
+else:
+    st.sidebar.error(f"Error Code: {response.status_code}")
 
 st.sidebar.divider()
 st.sidebar.subheader("🧪 Real-Time Soil Data")
