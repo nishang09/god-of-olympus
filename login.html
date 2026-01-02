@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSmart Pro | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; background-color: #000; }
+        .dark-energy-bg {
+            background: radial-gradient(circle at 50% 50%, #1a1000 0%, #000000 100%);
+            position: relative; height: 100vh; width: 100%;
+        }
+        .dark-energy-bg::before {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, #f9731633, transparent 30%);
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        .glass-card {
+            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px);
+            border: 1px solid rgba(249, 115, 22, 0.3); box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        .input-orange:focus { box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); border-color: #f97316; }
+        .orange-glow { text-shadow: 0 0 10px rgba(249, 115, 22, 0.5); }
+    </style>
+</head>
+<body class="dark-energy-bg flex items-center justify-center p-6">
+
+    <div class="glass-card p-10 rounded-[2.5rem] w-full max-w-md z-10 transform transition-all">
+        
+        <div class="text-center mb-10">
+            <div class="bg-zinc-900 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-500/30 shadow-lg shadow-orange-500/10">
+                <i class="fas fa-seedling text-orange-500 text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-white tracking-tight orange-glow">AgriSmart <span class="text-orange-500">Pro</span></h1>
+            <p class="text-zinc-500 mt-2 font-medium text-sm">Smart Advisory for Marginal Farmers</p>
+        </div>
+
+        <form action="index.html" method="GET" class="space-y-6">
+            <div>
+                <label class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 ml-1">Farmer Credentials</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600 group-focus-within:text-orange-500 transition-colors">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <input type="text" required
+                        class="block w-full pl-12 pr-4 py-4 bg-black border border-zinc-800 rounded-2xl focus:ring-1 focus:ring-orange-500 outline-none transition-all text-zinc-200 input-orange" 
+                        placeholder="Mobile or Email">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 ml-1">Secure PIN</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-600 group-focus-within:text-orange-500 transition-colors">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <input type="password" required
+                        class="block w-full pl-12 pr-4 py-4 bg-black border border-zinc-800 rounded-2xl focus:ring-1 focus:ring-orange-500 outline-none transition-all text-zinc-200 input-orange" 
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-orange-900/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 mt-4">
+                ACCESS PORTAL <i class="fas fa-bolt"></i>
+            </button>
+        </form>
+
+        <div class="mt-10 text-center">
+            <p class="text-zinc-500 text-sm font-medium">
+                Not a member yet? 
+                <a href="#" class="text-orange-500 font-bold hover:text-orange-400 transition-colors underline underline-offset-4 decoration-1">Join Community</a>
+            </p>
+            
+            <div class="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-zinc-800/50">
+                <a href="#" class="text-[10px] font-bold text-zinc-600 hover:text-orange-500 tracking-widest uppercase transition-colors">Privacy</a>
+                <div class="h-1 w-1 bg-zinc-800 rounded-full"></div>
+                <a href="#" class="text-[10px] font-bold text-zinc-600 hover:text-orange-500 tracking-widest uppercase transition-colors">Support</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,332 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GearGuard - Floral Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        /* --- FLORAL THEME VARIABLES --- */
-        :root {
-            --primary-pink: #e91e63;
-            --soft-pink: #fff0f5;
-            --sidebar-bg: #ffffff;
-            --text-dark: #444;
-            --border-color: #fce4ec;
-            --card-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            --font-head: 'Playfair Display', serif;
-            --font-body: 'Poppins', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Farmer</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+<style>
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 
-        body {
-            background-color: #fafafa;
-            background-image: radial-gradient(#ffebee 1px, transparent 1px);
-            background-size: 20px 20px;
-            font-family: var(--font-body);
-            color: var(--text-dark);
-            margin: 0;
-            display: flex; height: 100vh; overflow: hidden;
-        }
+/* Navbar */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 50px;
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid #eee;
+}
 
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex; flex-direction: column; padding: 25px;
-            box-shadow: 5px 0 20px rgba(0,0,0,0.02); z-index: 10;
-        }
+.navbar .logo{
+  font-size:24px;
+  font-weight:bold;
+  color:#ff6a00;
+}
 
-        .brand-logo {
-            font-family: var(--font-head); font-size: 1.8rem; font-weight: 800;
-            color: var(--primary-pink); margin-bottom: 50px;
-            display: flex; align-items: center; gap: 10px;
-        }
+.navbar ul{
+  display:flex;
+  list-style:none;
+  gap:25px;
+}
 
-        .nav-item {
-            padding: 12px 20px; margin-bottom: 8px; cursor: pointer;
-            color: #777; font-weight: 600; border-radius: 50px;
-            display: flex; align-items: center; gap: 15px; transition: 0.3s;
-        }
-        .nav-item:hover, .nav-item.active { background: var(--soft-pink); color: var(--primary-pink); }
+.navbar ul li{
+  position:relative;
+}
 
-        /* --- MAIN CONTENT --- */
-        .main-content { flex: 1; padding: 30px; overflow-y: auto; background: rgba(255,255,255,0.5); }
-        h2 { font-family: var(--font-head); color: #333; margin: 0; font-size: 1.8rem;}
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.navbar ul li a{
+  text-decoration:none;
+  color:#000;
+  font-weight:500;
+  transition:0.3s;
+}
 
-        .btn-bloom {
-            background: var(--primary-pink); color: white;
-            padding: 12px 25px; border-radius: 50px; border: none;
-            font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
-            transition: 0.3s; display: flex; align-items: center; gap: 8px;
-        }
+.navbar ul li a:hover{
+  color:#ff6a00;
+}
 
-        /* --- KANBAN --- */
-        .kanban-board { display: flex; gap: 20px; height: 100%; }
-        .kanban-col {
-            flex: 1; background: #fff; border-radius: 15px; padding: 20px;
-            border: 1px solid #f0f0f0; box-shadow: var(--card-shadow);
-            display: flex; flex-direction: column; gap: 15px;
-            min-height: 200px; transition: background 0.3s;
-        }
-        
-        .kanban-col.drag-over {
-            background: var(--soft-pink);
-            border: 2px dashed var(--primary-pink);
-        }
+.navbar ul li ul{
+  display:none;
+  position:absolute;
+  top:35px;
+  left:0;
+  background:#fff;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  padding:10px 0;
+  border-radius:10px;
+  min-width:150px;
+}
 
-        .col-header {
-            font-weight: 700; color: #888; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
-            border-bottom: 2px solid var(--soft-pink); padding-bottom: 10px; margin-bottom: 5px;
-        }
+.navbar ul li:hover ul{
+  display:block;
+}
 
-        .task-card {
-            background: #fff; border: 1px solid #ffe0e6;
-            border-left: 4px solid var(--primary-pink);
-            border-radius: 10px; padding: 15px; cursor: grab; transition: 0.3s;
-        }
-        .task-card:active { cursor: grabbing; }
-        .task-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.1); }
-        
-        .tag { font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; float: right; }
-        .tag-high { background: #ffebee; color: #c62828; }
-        .tag-routine { background: #e8f5e9; color: #2e7d32; }
+.navbar ul li ul li{
+  padding:10px 20px;
+}
 
-        /* --- ASSETS SECTION --- */
-        .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .asset-card {
-            background: white; border-radius: 15px; padding: 20px; border: 1px solid var(--border-color);
-            display: flex; align-items: center; gap: 15px;
-        }
-        .asset-icon { width: 50px; height: 50px; background: var(--soft-pink); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary-pink); font-size: 1.5rem; }
+.navbar ul li ul li a{
+  color:#333;
+}
 
-        /* --- CALENDAR --- */
-        .calendar-wrapper { background: white; padding: 25px; border-radius: 20px; box-shadow: var(--card-shadow); }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #ffe0e6; border: 1px solid #ffe0e6; }
-        .cal-head { background: #fff0f5; text-align: center; padding: 10px; font-weight: bold; color: var(--primary-pink); }
-        .cal-day { background: white; min-height: 100px; padding: 10px; position: relative; }
-        .day-num { font-weight: bold; font-size: 0.9rem; color: #555; }
-        .event-pill { font-size: 0.7rem; padding: 3px 6px; border-radius: 4px; margin-top: 5px; background: #e3f2fd; color: #1565c0; border-left: 3px solid #1565c0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav-right button{
+  padding:8px 18px;
+  border:none;
+  border-radius:25px;
+  background:#ff6a00;
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-        /* --- MODAL --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.6); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 100; }
-        .modal-box { background: white; padding: 30px; border-radius: 20px; width: 500px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 2px solid var(--soft-pink); max-height: 90vh; overflow-y: auto; }
-        .modal-box label { font-size: 0.8rem; font-weight: 600; color: var(--primary-pink); margin-bottom: 5px; display: block; }
-        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #e0e0e0; font-family: var(--font-body); box-sizing: border-box; }
-        textarea { height: 80px; resize: none; }
+.nav-right button:hover{
+  background:#e55b00;
+}
 
-        .section { display: none; height: 100%; animation: fadeIn 0.4s ease; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: 0; } }
-    </style>
+/* Hero */
+.hero{
+  height:90vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://source.unsplash.com/1600x900/?farm') no-repeat center/cover;
+  color:white;
+  padding:0 20px;
+}
+
+.hero h1{
+  font-size:48px;
+  margin-bottom:20px;
+  animation: fadeInDown 2s;
+}
+
+.hero p{
+  font-size:20px;
+  margin-bottom:30px;
+  animation: fadeInUp 2s;
+}
+
+.hero button{
+  padding:15px 35px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#ff6a00;
+  color:white;
+  cursor:pointer;
+  animation: bounceIn 2s;
+}
+
+.hero button:hover{
+  background:#e55b00;
+}
+
+/* Features */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  padding:80px 50px;
+}
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 5px 20px rgba(0,0,0,0.05);
+  transition:0.5s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.1);
+}
+
+.card span{
+  font-size:50px;
+}
+
+.card h3{
+  margin-top:15px;
+  margin-bottom:10px;
+}
+
+/* CTA */
+.cta{
+  background:#000;
+  color:white;
+  text-align:center;
+  padding:80px 20px;
+}
+
+.cta button{
+  margin-top:20px;
+  padding:15px 35px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#ff6a00;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.cta button:hover{
+  background:#e55b00;
+}
+
+/* Animations Keyframes */
+@keyframes fadeInDown{
+  0%{opacity:0; transform:translateY(-50px);}
+  100%{opacity:1; transform:translateY(0);}
+}
+
+@keyframes fadeInUp{
+  0%{opacity:0; transform:translateY(50px);}
+  100%{opacity:1; transform:translateY(0);}
+}
+
+@keyframes bounceIn{
+  0%{opacity:0; transform:scale(0.3);}
+  50%{opacity:1; transform:scale(1.05);}
+  70%{transform:scale(0.9);}
+  100%{transform:scale(1);}
+}
+</style>
 </head>
 <body>
 
-    <nav class="sidebar">
-        <div class="brand-logo"><i class="fa fa-spa"></i> GearGuard</div>
-        <div class="nav-item active" onclick="switchTab('dashboard', this)"><i class="fa fa-th-large"></i> Maintenance</div>
-        <div class="nav-item" onclick="switchTab('assets', this)"><i class="fa fa-box-open"></i> Assets</div>
-        <div class="nav-item" onclick="switchTab('calendar', this)"><i class="fa fa-calendar-alt"></i> Calendar</div>
-        <div class="nav-item" style="margin-top:auto; color:#ff6090;" onclick="window.location.href='login.html'"><i class="fa fa-sign-out-alt"></i> Logout</div>
-    </nav>
+<!-- Navbar -->
+<div class="navbar">
+  <div class="logo">🌾 Smart Farmer</div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Crops</a>
+      <ul>
+        <li><a href="#">Wheat</a></li>
+        <li><a href="#">Rice</a></li>
+        <li><a href="#">Vegetables</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Weather</a></li>
+    <li><a href="#">Water Advice</a></li>
+    <li><a href="#">Pests</a></li>
+  </ul>
+  <div class="nav-right">
+    <button onclick="location.href='login.html'">Login</button>
+  </div>
+</div>
 
-    <main class="main-content">
-        <section id="dashboard" class="section active">
-            <div class="top-bar">
-                <h2>Ops Overview</h2>
-                <button class="btn-bloom" onclick="openModal()"><i class="fa fa-plus-circle"></i> New Request</button>
-            </div>
-            <div class="kanban-board">
-                <div class="kanban-col" id="col-new" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
-                    <div class="col-header">Incoming Requests</div>
-                    <div class="task-card" id="task-1" draggable="true" ondragstart="drag(event)">
-                        <span class="tag tag-high">Urgent</span>
-                        <h4>HVAC System Failure</h4>
-                        <p>Zone 4-B Server Room</p>
-                    </div>
-                </div>
-                
-                <div class="kanban-col" id="col-progress" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
-                    <div class="col-header">In Progress</div>
-                    <div class="task-card" id="task-3" draggable="true" ondragstart="drag(event)" style="border-left-color: #ff9800;">
-                        <h4>Main Gate Repair</h4>
-                        <p>Structural Welding</p>
-                    </div>
-                </div>
-                
-                <div class="kanban-col" id="col-done" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
-                    <div class="col-header">Completed</div>
-                    <div class="task-card" id="task-4" draggable="true" ondragstart="drag(event)" style="border-left-color: #4caf50; opacity: 0.7;">
-                        <h4>Office Lighting</h4>
-                        <p>LED Conversion Complete</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- Hero Section -->
+<div class="hero">
+  <h1>Smart Solutions for Farmers</h1>
+  <p>Crops • Weather • Water • Pests — All in one place</p>
+  <button>Get Started Now</button>
+</div>
 
-        <section id="assets" class="section">
-            <div class="top-bar"><h2>Facility Assets</h2></div>
-            <div class="asset-grid">
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-car"></i></div><div><h4>Fleet Vehicle A1</h4><p>Status: Healthy</p></div></div>
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-bolt"></i></div><div><h4>Backup Generator</h4><p>Status: Healthy</p></div></div>
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-wind"></i></div><div><h4>HVAC Central</h4><p>Status: Warning</p></div></div>
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-server"></i></div><div><h4>Data Mainframe</h4><p>Status: Healthy</p></div></div>
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-fire-extinguisher"></i></div><div><h4>Fire System</h4><p>Status: Inspection Due</p></div></div>
-                <div class="asset-card"><div class="asset-icon"><i class="fa fa-robot"></i></div><div><h4>Assembly Arm</h4><p>Status: Offline</p></div></div>
-            </div>
-        </section>
+<!-- Features -->
+<div class="features">
+  <div class="card">
+    <span>🌱</span>
+    <h3>Crop Advice</h3>
+    <p>Which crop to plant and when</p>
+  </div>
+  <div class="card">
+    <span>🌦</span>
+    <h3>Weather Info</h3>
+    <p>Today & Tomorrow's Weather</p>
+  </div>
+  <div class="card">
+    <span>💧</span>
+    <h3>Water Advice</h3>
+    <p>When and how much to water</p>
+  </div>
+  <div class="card">
+    <span>🐛</span>
+    <h3>Pest Control</h3>
+    <p>Protect crops from diseases</p>
+  </div>
+</div>
 
-        <section id="calendar" class="section">
-            <div class="top-bar"><h2>December Maintenance</h2></div>
-            <div class="calendar-wrapper">
-                <div class="calendar-grid" id="calendar-grid"></div>
-            </div>
-        </section>
-    </main>
+<!-- CTA -->
+<div class="cta">
+  <h2>Become a Smart Farmer Today</h2>
+  <button>Register Now</button>
+</div>
 
-    <div class="modal-overlay" id="requestModal">
-        <div class="modal-box">
-            <h3 style="color:var(--primary-pink); margin: 0 0 20px 0; font-family: var(--font-head);">Maintenance Service Request</h3>
-            
-            <label>Request Subject</label>
-            <input type="text" id="reqSubject" placeholder="e.g. Engine Overheating">
-            
-            <div style="display:flex; gap:10px;">
-                <div style="flex:1;">
-                    <label>Equipment Category</label>
-                    <select id="reqCategory">
-                        <option>Mechanical</option>
-                        <option>Electrical</option>
-                        <option>Infrastructure</option>
-                        <option>IT/Servers</option>
-                    </select>
-                </div>
-                <div style="flex:1;">
-                    <label>Maintenance Type</label>
-                    <select id="reqType">
-                        <option>Corrective</option>
-                        <option>Preventive</option>
-                    </select>
-                </div>
-            </div>
-
-            <div style="display:flex; gap:10px;">
-                <div style="flex:1;">
-                    <label>Schedule Date</label>
-                    <select id="reqDate">
-                        <option value="1">Dec 01</option><option value="5">Dec 05</option>
-                        <option value="10">Dec 10</option><option value="15">Dec 15</option>
-                        <option value="20">Dec 20</option><option value="25">Dec 25</option>
-                        <option value="30">Dec 30</option>
-                    </select>
-                </div>
-                <div style="flex:1;">
-                    <label>Priority Level</label>
-                    <select id="reqPriority">
-                        <option value="tag-routine">Routine</option>
-                        <option value="tag-high">Critical/Urgent</option>
-                    </select>
-                </div>
-            </div>
-
-            <label>Detailed Description</label>
-            <textarea id="reqDesc" placeholder="Describe the issue in detail..."></textarea>
-
-            <div style="display:flex; gap:10px; margin-top: 10px;">
-                <button class="btn-bloom" style="flex:1; justify-content:center;" onclick="submitRequest()">Submit Request</button>
-                <button class="btn-bloom" style="flex:1; background:#999; justify-content:center;" onclick="closeModal()">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let calendarEvents = {
-            2: "Sprinkler Check",
-            5: "Flower Planting",
-            18: "Generator Service"
-        };
-
-        function allowDrop(ev) {
-            ev.preventDefault();
-            ev.currentTarget.classList.add('drag-over');
-        }
-
-        function dragLeave(ev) {
-            ev.currentTarget.classList.remove('drag-over');
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            ev.currentTarget.classList.remove('drag-over');
-            var data = ev.dataTransfer.getData("text");
-            var draggedElement = document.getElementById(data);
-            
-            if(ev.currentTarget.id === 'col-progress') {
-                draggedElement.style.borderLeftColor = "#ff9800";
-            } else if(ev.currentTarget.id === 'col-done') {
-                draggedElement.style.borderLeftColor = "#4caf50";
-                draggedElement.style.opacity = "0.7";
-            } else {
-                draggedElement.style.borderLeftColor = "var(--primary-pink)";
-                draggedElement.style.opacity = "1";
-            }
-            ev.currentTarget.appendChild(draggedElement);
-        }
-
-        function switchTab(tabId, el) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            if(tabId === 'calendar') renderCalendar();
-        }
-
-        function openModal() { document.getElementById('requestModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('requestModal').style.display = 'none'; }
-
-        let taskCounter = 5; 
-        function submitRequest() {
-            const subject = document.getElementById('reqSubject').value;
-            const day = document.getElementById('reqDate').value;
-            const priority = document.getElementById('reqPriority').value;
-            const category = document.getElementById('reqCategory').value;
-
-            if(!subject) return;
-
-            const card = document.createElement('div');
-            card.className = 'task-card';
-            card.id = 'task-' + taskCounter++;
-            card.draggable = true;
-            card.ondragstart = drag;
-            
-            card.innerHTML = `<span class="tag ${priority}">${category}</span><h4>${subject}</h4><p>Date: Dec ${day}</p>`;
-            document.getElementById('col-new').appendChild(card);
-
-            calendarEvents[day] = subject;
-            closeModal();
-            document.getElementById('reqSubject').value = "";
-            alert("Professional Service Request Lodged Successfully!");
-        }
-
-        function renderCalendar() {
-            const grid = document.getElementById('calendar-grid');
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            grid.innerHTML = "";
-            days.forEach(day => grid.innerHTML += `<div class="cal-head">${day}</div>`);
-            for(let i=1; i<=31; i++) {
-                let eventHtml = calendarEvents[i] ? `<div class="event-pill">${calendarEvents[i]}</div>` : '';
-                grid.innerHTML += `<div class="cal-day"><span class="day-num">${i}</span>${eventHtml}</div>`;
-            }
-        }
-
-        window.onload = () => { renderCalendar(); };
-    </script>
 </body>
 </html>
