@@ -50,15 +50,30 @@
     </div>
 
     <script>
-        document.getElementById('regForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Storing data
-            localStorage.setItem('savedMobile', document.getElementById('regMobile').value);
-            localStorage.setItem('savedPass', document.getElementById('regPass').value);
-            localStorage.setItem('savedName', document.getElementById('regName').value);
-            alert("Registration Successful!");
-            window.location.href = "login.html";
+    document.getElementById('regForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const userData = {
+        name: document.getElementById('regName').value,
+        mobile: document.getElementById('regMobile').value,
+        pin: document.getElementById('regPass').value,
+        soil: document.getElementById('regSoil').value,
+        land: document.getElementById('regLand').value,
+        state: "Punjab" // Optional: Add a state field to your form for better filtering
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
         });
+        const result = await response.json();
+        alert(result.message);
+        window.location.href = "login.html";
+    } catch (err) {
+        alert("Backend Offline! Make sure to run 'node server.js' in your terminal.");
+    }
+});
     </script>
 </body>
 </html>

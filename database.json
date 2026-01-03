@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "name": "nishang",
+      "mobile": "123456",
+      "pin": "123",
+      "soil": "Black Soil",
+      "land": "10"
+    },
+    {
+      "name": "nishang",
+      "mobile": "123456",
+      "pin": "123",
+      "soil": "Red Soil",
+      "land": "10",
+      "state": "Punjab"
+    }
+  ]
+}

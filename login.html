@@ -40,20 +40,33 @@
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const sMobile = localStorage.getItem('savedMobile');
-            const sPass = localStorage.getItem('savedPass');
-            const tMobile = document.getElementById('logMobile').value;
-            const tPass = document.getElementById('logPass').value;
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const loginData = {
+        mobile: document.getElementById('logMobile').value,
+        pin: document.getElementById('logPass').value
+    };
 
-            if (tMobile === sMobile && tPass === sPass) {
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = "index.html";
-            } else {
-                alert("Incorrect Details! Please use the number and PIN you registered with.");
-            }
+    try {
+        const response = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData)
         });
+        const result = await response.json();
+        
+        if (result.success) {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('savedName', result.user.name);
+            localStorage.setItem('savedState', result.user.state || "Punjab");
+            window.location.href = "index.html";
+        } else {
+            alert("Invalid Credentials!");
+        }
+    } catch (err) {
+        alert("Server Error! Check if your Node.js backend is running.");
+    }
+});
     </script>
 </body>
 </html>
